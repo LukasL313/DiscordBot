@@ -6,7 +6,6 @@ using DiscordBot.Commands;
 using DiscordBot.LoggingService;
 public class Program
  {    
-
     private static DiscordSocketClient? _client; 
     private static LoggingService? _loggingService;
     private static CommandService? _commands;
@@ -14,21 +13,25 @@ public class Program
 
     public static async Task Main()
     {
+        // Endrer config som tillater oss å endre på meldings cache størrelse og gateway intents.
         var config = new DiscordSocketConfig 
         { 
             MessageCacheSize = 100,
             GatewayIntents = GatewayIntents.AllUnprivileged | GatewayIntents.MessageContent
         };;
+
+        // Initialiserer CommandService & andre tjenester
         var commandService = new CommandService();
 
         _client = new DiscordSocketClient(config);
         
         _loggingService = new LoggingService(_client, commandService);
 
-        _commands = new CommandService();
+        _commands = new CommandService(); 
 
 
         var token = File.ReadAllText("token.txt");
+        // Når .client/"" blir kjørt blir tilsvarende funksjon kjørt
         _client.MessageReceived += HandleKeyWordCmds;
         _client.MessageReceived += HandleCommandAsync;
         _client.MessageReceived += MessageReceived;
@@ -82,7 +85,7 @@ public class Program
        {
         await userMessage.Channel.SendMessageAsync("Ok.");
        } 
-       else if (content.Contains("help")) 
+       else if (content == "help") 
        {
          await userMessage.Channel.SendMessageAsync("Reference #help or open a ticket");
        }
@@ -91,14 +94,13 @@ public class Program
           await userMessage.Channel.SendMessageAsync("Hi");
        }
       
-
-       return Task.CompletedTask;
+             return Task.CompletedTask;
     }
 
    private static async Task MessageUpdated(Cacheable<IMessage, ulong> before, SocketMessage after, ISocketMessageChannel channel)
    {
         var message = await before.GetOrDownloadAsync(); 
-       // Console.WriteLine($"Message edited: \"{message.Content}\" -> \"{after.Content}\"");
+       // Sjeker om meldingen er = null, og returnerer en melding til konsollen
        if (message == null)
        {
          Console.WriteLine($"Message Edited: [Kan ikke hente orginal melding] -> \"{after.Content}\"");
@@ -123,7 +125,7 @@ public class Program
         return Task.CompletedTask;
         
         // Forteller konsollen hvem som sendte meldingen og hva som ble sendt.
-    Console.WriteLine($"Message received from {userMessage.Author}: {userMessage.Content}");
+    Console.WriteLine($"Message received from {userMessage.Author}");
     return Task.CompletedTask;
     }
 }

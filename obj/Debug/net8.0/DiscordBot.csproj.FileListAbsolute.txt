@@ -26,3 +26,4 @@ C:\Users\lukas\Desktop\DiscordBot\obj\Debug\net8.0\refint\DiscordBot.dll
 C:\Users\lukas\Desktop\DiscordBot\obj\Debug\net8.0\DiscordBot.pdb
 C:\Users\lukas\Desktop\DiscordBot\obj\Debug\net8.0\DiscordBot.genruntimeconfig.cache
 C:\Users\lukas\Desktop\DiscordBot\obj\Debug\net8.0\ref\DiscordBot.dll
+C:\Users\lukas\Desktop\DiscordBot\obj\Debug\net8.0\DiscordBot.sourcelink.json
